@@ -2,10 +2,15 @@
 
 An enterprise-grade, real-time security application built with Python and PowerShell. **ShieldWall AI** continuously monitors Windows Security Event Logs for unauthorized connection probes, network scans, and brute-force intrusion attempts, dynamically enforcing persistent inbound block rules directly in **Windows 11 Defender Firewall**.
 
-![Platform](https://img.shields.io/badge/platform-Windows%2011%20%7C%2010-0078D6.svg)
-![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)
-![GUI](https://img.shields.io/badge/GUI-CustomTkinter-darkgreen.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+<p align="center">
+  <img src="https://ibb.co/67DTMTcg" alt="Application Interface Preview" width="800"/>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Windows%2011-0078D6.svg" alt="Platform"/>
+  <img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Version"/>
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"/>
+</p>
 
 ---
 
