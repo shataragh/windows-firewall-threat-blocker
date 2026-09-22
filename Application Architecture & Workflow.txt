@@ -1,0 +1,23 @@
+       +-------------------------------------------------+
+       |           Windows Security Event Log            |
+       |                   (Event 4625)                  |
+       +------------------------+------------------------+
+                                |
+                                v
+       +-------------------------------------------------+
+       |             ShieldWall AI Engine                |
+       |        Extracts & Counts Threat IPs             |
+       +------------------------+------------------------+
+                                |
+                   [ Threshold Breached? ]
+                                |
+                     +----------+----------+
+                     |                     |
+                  ( YES )                ( NO )
+                     |                     |
+                     v                     v
+     +-------------------------------+  [ Continue ]
+     |  Direct Injection into        |  [ Monitoring ]
+     |  Windows 11 Defender Firewall |
+     |  (Action: Inbound Block)      |
+     +-------------------------------+
