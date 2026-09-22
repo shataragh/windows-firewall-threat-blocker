@@ -24,8 +24,9 @@ An enterprise-grade, real-time security application built with Python and PowerS
 
 ```text
 windows-firewall-threat-blocker/
-├── app.py              # Main Python application (GUI & Threat Engine)
-├── requirements.txt    # Application dependencies
-├── README.md           # Documentation
-├── LICENSE             # MIT License
-└── .gitignore          # Git ignore rules
+├── app.py                                  # Main Python application (GUI & Threat Engine)
+├── requirements.txt                        # Application dependencies
+├── Application Architecture & Workflow.txt # System design, data flow, and threat model specs
+├── README.md                               # Project documentation and quick start guide
+├── LICENSE                                 # MIT License
+└── .gitignore                              # Git ignore rules
