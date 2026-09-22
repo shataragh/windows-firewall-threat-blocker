@@ -1,23 +1,73 @@
-       +-------------------------------------------------+
-       |           Windows Security Event Log            |
-       |                   (Event 4625)                  |
-       +------------------------+------------------------+
-                                |
-                                v
-       +-------------------------------------------------+
-       |             ShieldWall AI Engine                |
-       |        Extracts & Counts Threat IPs             |
-       +------------------------+------------------------+
-                                |
-                   [ Threshold Breached? ]
-                                |
-                     +----------+----------+
-                     |                     |
-                  ( YES )                ( NO )
-                     |                     |
-                     v                     v
-     +-------------------------------+  [ Continue ]
-     |  Direct Injection into        |  [ Monitoring ]
-     |  Windows 11 Defender Firewall |
-     |  (Action: Inbound Block)      |
-     +-------------------------------+
+---
+
+### Content for `Application Architecture & Workflow.txt`
+
+Create a new file on GitHub named `Application Architecture & Workflow.txt` and paste the following content inside it:
+
+```text
+================================================================================
+SHIELDWALL AI — APPLICATION ARCHITECTURE & WORKFLOW SPECIFICATION
+================================================================================
+
+1. OVERVIEW
+-----------
+ShieldWall AI is a hybrid Python/PowerShell security application designed to detect
+unauthorized connection probes, port scans, and authentication brute-force attempts
+on Windows 10/11 endpoints, automatically translating detected threat IPs into
+enforced inbound block rules within Windows Defender Firewall.
+
+2. SYSTEM ARCHITECTURE
+----------------------
+The system is divided into four core layers:
+
+  [ GUI / Presentation Layer ]
+              │
+              ▼
+  [ Threat Detection Engine ]
+              │
+              ▼
+  [ PowerShell Execution Bridge ]
+              │
+              ▼
+  [ Windows OS & Firewall Core ]
+
+- GUI / Presentation Layer: CustomTkinter-based asynchronous desktop interface.
+- Threat Detection Engine: Background thread parsing Security Event Log (Event ID 4625).
+- PowerShell Execution Bridge: Subprocess engine executing hidden administrative commands.
+- Windows OS Core: Windows Event Log Service & Windows Defender Firewall with Advanced Security.
+
+3. EVENT DETECTION & THREAT WORKFLOW
+-------------------------------------
+Step 1: Ingestion
+  - Query Security Event Log via PowerShell for Event ID 4625 (Audit Failure).
+  - Retrieve the last 50 events in raw XML format.
+
+Step 2: Parsing & Aggregation
+  - Parse XML nodes using Python's xml.etree.ElementTree.
+  - Extract the target 'IpAddress' field.
+  - Filter out loopback (127.0.0.1, ::1) and local broadcast addresses.
+  - Group and count failure attempts per unique IP address.
+
+Step 3: Threshold Evaluation
+  - Compare counts against configured threshold (default: 3 failed attempts).
+  - If threshold is breached, evaluate whether an active rule already exists.
+
+Step 4: Firewall Rule Enforcement
+  - Execute PowerShell command: New-NetFirewallRule
+  - Parameters:
+      DisplayName: ATTACKER_BLOCKED_<IP>
+      Direction: Inbound
+      Action: Block
+      RemoteAddress: <IP>
+      Protocol: Any
+
+4. THREAT MODEL & SECURITY CONSIDERATIONS
+------------------------------------------
+- Privilege Requirement: Requires Administrator privileges to interface with 
+  NetSecurity PowerShell modules. Automatically invokes UAC elevation on launch.
+- Non-Blocking GUI Execution: All detection loops, XML parsing, and shell executions
+  run inside daemon threads to maintain GUI responsiveness.
+- Scope Limits: Applies strictly to inbound traffic rules under the persistent 
+  local policy store.
+
+================================================================
